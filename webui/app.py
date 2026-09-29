@@ -49,7 +49,10 @@ def on_court_image_select(corners_state, template_file, evt: gr.SelectData):
     if len(corners_state) >= 4:
         corners_state = []
 
-    x, y = evt.index
+    if isinstance(evt.index, dict):
+        x, y = evt.index.get('x', 0), evt.index.get('y', 0)
+    else:
+        x, y = evt.index
     corners_state.append((x, y))
 
     template_img = imread_safe(template_file)
